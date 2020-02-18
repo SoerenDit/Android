@@ -16,7 +16,6 @@ import java.util.Random;
 /*
     This game has XXX phases:
     Phase 0: Roll first time for attacking
-
  */
 
 public class MainActivity extends AppCompatActivity {
