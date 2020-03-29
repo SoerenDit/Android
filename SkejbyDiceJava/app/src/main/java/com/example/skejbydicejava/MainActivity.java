@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 
 public class MainActivity extends AppCompatActivity {
     private ImageView imageViewDie1, imageViewDie2;
@@ -23,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewMessage;
     private Button rollButton;
     private Die attackDie1, attackDie2;
-    private Random rng = new Random();
     private Player pos1Player, pos2Player, pos3Player, pos4Player;
     private List<Player> players;
     public static MediaPlayer mediaPlayer;
@@ -86,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
         imageViewPos4.setEnabled(false);
     }
 
+    private void rotatePlayers() {
+        for (Player p : players) {
+            if (p.getPos() == 4) {
+                p.setPos(1);
+            } else {
+                p.setPos(p.getPos() + 1);
+            }
+        }
+        placePlayers();
+    }
+
     private void placePlayers() {
         for (Player p : players) {
             switch (p.getPos()) {
@@ -124,6 +132,8 @@ public class MainActivity extends AppCompatActivity {
         imageViewLuckyDie1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DialogBox dialogBox = new DialogBox();
+                dialogBox.show(getSupportFragmentManager(),"Eksempel");
                 pos1Player.getLuckyDie().roll(imageViewLuckyDie1);
             }
         });
@@ -175,22 +185,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void rotatePlayers() {
-        for (Player p : players) {
-            if (p.getPos() == 4) {
-                p.setPos(1);
-            } else {
-                p.setPos(p.getPos() + 1);
-            }
-        }
-        placePlayers();
-    }
-
-
-    private int attackValue() {
-        return (attackDie1.getNumber() + attackDie2.getNumber()) / 2;
-    }
-
     private void attack(Player p, int sips) {
         p.addSips(sips);
         updateSips();
@@ -200,12 +194,14 @@ public class MainActivity extends AppCompatActivity {
         imageViewPos4.setEnabled(false);
     }
 
+    private int attackValue() {
+        return (attackDie1.getNumber() + attackDie2.getNumber()) / 2;
+    }
+
     private void updateSips() {
         textViewPos1Sips.setText("" + pos1Player.getSips());
         textViewPos2Sips.setText("" + pos2Player.getSips());
         textViewPos3Sips.setText("" + pos3Player.getSips());
         textViewPos4Sips.setText("" + pos4Player.getSips());
     }
-
-
 }
