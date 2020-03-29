@@ -14,35 +14,49 @@ public class DialogBox extends AppCompatDialogFragment {
     private String dialogBoxType;
     private String title;
     private String message;
+    private Player attackedPlayer;
+    private String positiveButton;
+    private String negativeButton;
 
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         sips = listener.sipsToDrink();
+        String sipString = "";
+        if (sips == 1) {
+            sipString = sips + " sip";
+        } else {
+            sipString = sips + " sips";
+    }
         dialogBoxType = listener.dialogBoxType();
+        attackedPlayer = listener.attackedPlayer();
 
         switch (dialogBoxType) {
             case "Lucky":
                 title = "Pay first!";
-                if (sips == 1) {
-                    message = "You have to drink " + sips + " sip, before you may use the lucky die!";
-                } else {
-                    message = "You have to drink " + sips + " sips, before you may use the lucky die!";
-                }
+                message = "You have to drink " + sipString + ", before you may use the lucky die!";
+                positiveButton = "Ok";
+                negativeButton = "Nope";
+            case "YouHaveBeenAttacked":
+                title = attackedPlayer.getName() + " is under attack!";
+                message = "What do you want to do?";
+                positiveButton = "I will drink my " + sipString + ".";
+                negativeButton = "I will of course defend myself!";
         }
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title)
                 .setMessage(message)
-                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                .setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (dialogBoxType) {
-                            case "Lucky": listener.onYesClickedLucky();
+                            case "Lucky":
+                                listener.onYesClickedLucky();
+                            case "YouHaveBeenAttacked":
+                                listener.onYesClickedAttack();
                         }
-
                     }
                 })
-                .setNegativeButton("Nope", new DialogInterface.OnClickListener() {
+                .setNegativeButton(negativeButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -54,9 +68,13 @@ public class DialogBox extends AppCompatDialogFragment {
     public interface DialogBoxListener {
         void onYesClickedLucky();
 
+        void onYesClickedAttack();
+
         int sipsToDrink();
 
         String dialogBoxType();
+
+        Player attackedPlayer();
     }
 
     public void onAttach(Context context) {

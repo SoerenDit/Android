@@ -22,10 +22,12 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     private Button rollButton;
     private Die attackDie1, attackDie2;
     private Player pos1Player, pos2Player, pos3Player, pos4Player;
+    private Player attackedPlayer;
     private List<Player> players;
-    private int sips;
+    private int sipsToDrink;
     private String dialogBoxType;
     public static MediaPlayer mediaPlayer;
+
 
 
     @Override
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         imageViewLuckyDie1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sips = pos1Player.getLuckyDie().getNumber();
+                sipsToDrink = pos1Player.getLuckyDie().getNumber();
                 dialogBoxType = "Lucky";
                 DialogBox dialogBox = new DialogBox();
                 dialogBox.show(getSupportFragmentManager(),"Eksempel");
@@ -145,27 +147,34 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         imageViewPos2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attack(pos2Player, attackValue());
-                rotatePlayers();
-                textViewMessage.setText(pos1Player.getName() + "'s turn. Roll!");
+                sipsToDrink = attackValue();
+                dialogBoxType = "YouHaveBeenAttacked";
+                attackedPlayer = pos2Player;
+                DialogBox dialogBox = new DialogBox();
+                dialogBox.show(getSupportFragmentManager(),"Eksempel");
+
             }
         });
 
         imageViewPos3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attack(pos3Player, attackValue());
-                rotatePlayers();
-                textViewMessage.setText(pos1Player.getName() + "'s turn. Roll!");
+                sipsToDrink = attackValue();
+                dialogBoxType = "YouHaveBeenAttacked";
+                attackedPlayer = pos3Player;
+                DialogBox dialogBox = new DialogBox();
+                dialogBox.show(getSupportFragmentManager(),"Eksempel");
             }
         });
 
         imageViewPos4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                attack(pos4Player, attackValue());
-                rotatePlayers();
-                textViewMessage.setText(pos1Player.getName() + "'s turn. Roll!");
+                sipsToDrink = attackValue();
+                dialogBoxType = "YouHaveBeenAttacked";
+                attackedPlayer = pos4Player;
+                DialogBox dialogBox = new DialogBox();
+                dialogBox.show(getSupportFragmentManager(),"Eksempel");
             }
         });
 
@@ -180,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                 imageViewPos3.setEnabled(true);
                 imageViewPos4.setEnabled(true);
                 if (attackValue() > 1) {
-                    textViewMessage.setText("Who do you want to give " + attackValue() + " sips?");
+                    textViewMessage.setText("Who do you want to give " + attackValue() + " sipsToDrink?");
                 } else {
                     textViewMessage.setText("Who should drink a single sip?");
                 }
@@ -215,12 +224,24 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     @Override
+    public void onYesClickedAttack() {
+        attack(attackedPlayer, attackValue());
+        rotatePlayers();
+        textViewMessage.setText(pos1Player.getName() + "'s turn. Roll!");
+    }
+
+    @Override
     public int sipsToDrink() {
-        return sips;
+        return sipsToDrink;
     }
 
     @Override
     public String dialogBoxType() {
         return dialogBoxType;
+    }
+
+    @Override
+    public Player attackedPlayer() {
+        return attackedPlayer;
     }
 }
