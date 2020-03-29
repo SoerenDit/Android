@@ -35,11 +35,13 @@ public class DialogBox extends AppCompatDialogFragment {
                 message = "You have to drink " + sipString + ", before you may use the lucky die!";
                 positiveButton = "Ok";
                 negativeButton = "Nope";
+                break;
             case "YouHaveBeenAttacked":
-                title = attackedPlayer.getName() + " is under attack!";
+                title = attackedPlayer.getName() + ", you are under attack!";
                 message = "What do you want to do?";
                 positiveButton = "I will drink my " + sipString + ".";
                 negativeButton = "I will of course defend myself!";
+                break;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -51,8 +53,10 @@ public class DialogBox extends AppCompatDialogFragment {
                         switch (dialogBoxType) {
                             case "Lucky":
                                 listener.onYesClickedLucky();
+                                break;
                             case "YouHaveBeenAttacked":
                                 listener.onYesClickedAttack();
+                                break;
                         }
                     }
                 })

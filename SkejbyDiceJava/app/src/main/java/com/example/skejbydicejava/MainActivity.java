@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                 sipsToDrink = pos1Player.getLuckyDie().getNumber();
                 dialogBoxType = "Lucky";
                 DialogBox dialogBox = new DialogBox();
-                dialogBox.show(getSupportFragmentManager(),"Eksempel");
+                dialogBox.show(getSupportFragmentManager(),"Eksempel1");
             }
         });
 
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                 dialogBoxType = "YouHaveBeenAttacked";
                 attackedPlayer = pos2Player;
                 DialogBox dialogBox = new DialogBox();
-                dialogBox.show(getSupportFragmentManager(),"Eksempel");
+                dialogBox.show(getSupportFragmentManager(),"Eksempel2");
 
             }
         });
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                 dialogBoxType = "YouHaveBeenAttacked";
                 attackedPlayer = pos3Player;
                 DialogBox dialogBox = new DialogBox();
-                dialogBox.show(getSupportFragmentManager(),"Eksempel");
+                dialogBox.show(getSupportFragmentManager(),"Eksempel3");
             }
         });
 
@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                 dialogBoxType = "YouHaveBeenAttacked";
                 attackedPlayer = pos4Player;
                 DialogBox dialogBox = new DialogBox();
-                dialogBox.show(getSupportFragmentManager(),"Eksempel");
+                dialogBox.show(getSupportFragmentManager(),"Eksempel4");
             }
         });
 

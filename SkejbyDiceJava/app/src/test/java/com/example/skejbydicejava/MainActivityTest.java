@@ -43,6 +43,7 @@ public class MainActivityTest {
         assertEquals(R.drawable.gl1,l2.getImage());
         assertEquals(R.drawable.bluel1,l3.getImage());
         assertEquals(R.drawable.redl1,l4.getImage());
+        assertEquals(1,p1.getLuckyDie().getNumber());
     }
 
     @Test
