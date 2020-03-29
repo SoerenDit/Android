@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 public class DialogBox extends AppCompatDialogFragment {
     private DialogBoxListener listener;
     private int sips;
+    private int toBeat;
     private String dialogBoxType;
     private String title;
     private String message;
@@ -21,11 +22,13 @@ public class DialogBox extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         sips = listener.sipsToDrink();
         String sipString = "";
+        toBeat = listener.highestAttackDie();
+
         if (sips == 1) {
             sipString = sips + " sip";
         } else {
             sipString = sips + " sips";
-    }
+        }
         dialogBoxType = listener.dialogBoxType();
         attackedPlayer = listener.attackedPlayer();
 
@@ -42,6 +45,12 @@ public class DialogBox extends AppCompatDialogFragment {
                 positiveButton = "I will drink my " + sipString + ".";
                 negativeButton = "I will of course defend myself!";
                 break;
+            case "DefenceTime":
+                title = "Defence time!";
+                message = "Ok, " + attackedPlayer.getName() + ", you have to roll at least " + toBeat + ":";
+                positiveButton = "Roll";
+                negativeButton = "";
+                break;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -57,12 +66,19 @@ public class DialogBox extends AppCompatDialogFragment {
                             case "YouHaveBeenAttacked":
                                 listener.onYesClickedAttack();
                                 break;
+                            case "DefenceTime":
+                                listener.onYesClickedDefence();
                         }
                     }
                 })
                 .setNegativeButton(negativeButton, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        switch (dialogBoxType) {
+                            case "YouHaveBeenAttacked":
+                                listener.onNoClickedAttack();
+                                break;
+                        }
 
                     }
                 });
@@ -73,8 +89,13 @@ public class DialogBox extends AppCompatDialogFragment {
         void onYesClickedLucky();
 
         void onYesClickedAttack();
+        void onNoClickedAttack();
+
+        void onYesClickedDefence();
 
         int sipsToDrink();
+
+        int highestAttackDie();
 
         String dialogBoxType();
 

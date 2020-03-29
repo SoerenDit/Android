@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements DialogBox.DialogBoxListener {
     private ImageView imageViewDie1, imageViewDie2;
@@ -25,8 +26,10 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     private Player attackedPlayer;
     private List<Player> players;
     private int sipsToDrink;
+    private int toBeat;
     private String dialogBoxType;
     public static MediaPlayer mediaPlayer;
+    private Random rng = new Random();
 
 
 
@@ -189,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                 imageViewPos3.setEnabled(true);
                 imageViewPos4.setEnabled(true);
                 if (attackValue() > 1) {
-                    textViewMessage.setText("Who do you want to give " + attackValue() + " sipsToDrink?");
+                    textViewMessage.setText("Who do you want to give " + attackValue() + " sips?");
                 } else {
                     textViewMessage.setText("Who should drink a single sip?");
                 }
@@ -231,8 +234,36 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     @Override
+    public void onNoClickedAttack() {
+        toBeat = Math.max(attackDie1.getNumber(),attackDie2.getNumber());
+        dialogBoxType = "DefenceTime";
+        DialogBox dialogBox = new DialogBox();
+        dialogBox.show(getSupportFragmentManager(),"Eksempel1");
+    }
+
+    @Override
+    public void onYesClickedDefence() {
+        MainActivity.mediaPlayer.start();
+        int randomNumber = rng.nextInt(6) + 1;
+        if(randomNumber > toBeat) {
+            dialogBoxType = "SuccesfulDefence";
+            DialogBox dialogBox = new DialogBox();
+            dialogBox.show(getSupportFragmentManager(),"Eksempel1");
+        } else {
+
+        }
+        System.out.println("You rolled " + randomNumber + "!");
+
+    }
+
+    @Override
     public int sipsToDrink() {
         return sipsToDrink;
+    }
+
+    @Override
+    public int highestAttackDie() {
+        return toBeat;
     }
 
     @Override
