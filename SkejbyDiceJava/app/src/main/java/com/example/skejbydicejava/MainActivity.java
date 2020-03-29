@@ -1,7 +1,11 @@
 package com.example.skejbydicejava;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialogFragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogBox.DialogBoxListener {
     private ImageView imageViewDie1, imageViewDie2;
     private ImageView imageViewPos2, imageViewPos3, imageViewPos4;
     private ImageView imageViewLuckyDie1, imageViewLuckyDie2, imageViewLuckyDie3, imageViewLuckyDie4;
@@ -134,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DialogBox dialogBox = new DialogBox();
                 dialogBox.show(getSupportFragmentManager(),"Eksempel");
-                pos1Player.getLuckyDie().roll(imageViewLuckyDie1);
             }
         });
 
@@ -203,5 +206,10 @@ public class MainActivity extends AppCompatActivity {
         textViewPos2Sips.setText("" + pos2Player.getSips());
         textViewPos3Sips.setText("" + pos3Player.getSips());
         textViewPos4Sips.setText("" + pos4Player.getSips());
+    }
+
+    @Override
+    public void onYesClicked() {
+        pos1Player.getLuckyDie().roll(imageViewLuckyDie1);
     }
 }
