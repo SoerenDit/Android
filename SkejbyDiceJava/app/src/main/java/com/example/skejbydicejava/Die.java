@@ -10,15 +10,12 @@ import java.util.Random;
 public class Die {
     private int number;
     private List<Integer> numberPics;
-    private MediaPlayer diceRollSound;
     private Random rng = new Random();
 
     public Die(String color) {
-        // diceRollSound = MediaPlayer.create(Die.this, R.raw.diceroll);
         numberPics = new ArrayList<>();
         number = 1;
         setNumberPics(color);
-
     }
 
     private void setNumberPics(String color) {
@@ -66,7 +63,7 @@ public class Die {
     }
 
     public int roll(ImageView imageViewDie) {
-        // diceRollSound.start();
+        MainActivity.mediaPlayer.start();
         int randomNumber = rng.nextInt(6) + 1;
         number = randomNumber;
 
@@ -98,15 +95,15 @@ public class Die {
         return number;
     }
 
-    public void setNumber(int n) {
-        number = n;
-    }
-
     public void increaseDie() {
         number++;
     }
 
-    public int getImagge() {
+    public void decreaseDie() {
+        number--;
+    }
+
+    public int getImage() {
         return numberPics.get(number - 1);
     }
 

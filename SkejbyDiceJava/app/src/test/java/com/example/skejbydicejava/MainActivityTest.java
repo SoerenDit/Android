@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  */
 public class MainActivityTest {
     private Player p1, p2, p3, p4;
-    private LuckyDie l1, l2, l3, l4;
+    private Die l1, l2, l3, l4;
 
     @Before
     public void setUp() {
@@ -21,10 +21,10 @@ public class MainActivityTest {
         p3 = new Player("Bjørn", 3, "blue");
         p4 = new Player("Christian", 4, "red");
 
-        l1 = new LuckyDie("brown");
-        l2 = new LuckyDie("green");
-        l3 = new LuckyDie("blue");
-        l4 = new LuckyDie("red");
+        l1 = new Die("brown");
+        l2 = new Die("green");
+        l3 = new Die("blue");
+        l4 = new Die("red");
     }
 
     @Test
@@ -39,10 +39,10 @@ public class MainActivityTest {
     @Test
     public void testLuckyDie() {
         assertEquals(1,l1.getNumber());
-        assertEquals(R.drawable.brownl1,l1.getState());
-        assertEquals(R.drawable.gl1,l2.getState());
-        assertEquals(R.drawable.bluel1,l3.getState());
-        assertEquals(R.drawable.redl1,l4.getState());
+        assertEquals(R.drawable.brownl1,l1.getImage());
+        assertEquals(R.drawable.gl1,l2.getImage());
+        assertEquals(R.drawable.bluel1,l3.getImage());
+        assertEquals(R.drawable.redl1,l4.getImage());
     }
 
     @Test

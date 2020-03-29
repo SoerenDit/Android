@@ -14,13 +14,6 @@ import java.util.List;
 import java.util.Random;
 
 
-
-/*
-    This game has XXX phases:
-    Phase 0: Roll first time for attacking
-
- */
-
 public class MainActivity extends AppCompatActivity {
     private ImageView imageViewDie1, imageViewDie2;
     private ImageView imageViewPos2, imageViewPos3, imageViewPos4;
@@ -33,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Random rng = new Random();
     private Player pos1Player, pos2Player, pos3Player, pos4Player;
     private List<Player> players;
+    public static MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         players.add(new Player("Christian", 4, "red"));
         attackDie1 = new Die("white");
         attackDie2 = new Die("white");
+        mediaPlayer = MediaPlayer.create(this, R.raw.diceroll);
 
         setUpComponents();
 
@@ -97,28 +92,28 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     textViewPos1Name.setText(p.getName());
                     textViewPos1Sips.setText("" + p.getSips());
-                    imageViewLuckyDie1.setImageResource(p.getLuckyDie().getImagge());
+                    imageViewLuckyDie1.setImageResource(p.getLuckyDie().getImage());
                     pos1Player = p;
                     break;
                 case 2:
                     textViewPos2Name.setText(p.getName());
                     textViewPos2Sips.setText("" + p.getSips());
                     imageViewPos2.setImageResource(p.getToken());
-                    imageViewLuckyDie2.setImageResource(p.getLuckyDie().getImagge());
+                    imageViewLuckyDie2.setImageResource(p.getLuckyDie().getImage());
                     pos2Player = p;
                     break;
                 case 3:
                     textViewPos3Name.setText(p.getName());
                     textViewPos3Sips.setText("" + p.getSips());
                     imageViewPos3.setImageResource(p.getToken());
-                    imageViewLuckyDie3.setImageResource(p.getLuckyDie().getImagge());
+                    imageViewLuckyDie3.setImageResource(p.getLuckyDie().getImage());
                     pos3Player = p;
                     break;
                 case 4:
                     textViewPos4Name.setText(p.getName());
                     textViewPos4Sips.setText("" + p.getSips());
                     imageViewPos4.setImageResource(p.getToken());
-                    imageViewLuckyDie4.setImageResource(p.getLuckyDie().getImagge());
+                    imageViewLuckyDie4.setImageResource(p.getLuckyDie().getImage());
                     pos4Player = p;
                     break;
             }

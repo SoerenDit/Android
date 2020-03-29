@@ -13,7 +13,7 @@ public class Player {
         this.pos = pos;
         setToken(color);
         this.color = color;
-        this.lucky = new Die(color);
+        lucky = new Die(color);
         sips = 0;
     }
 
@@ -58,9 +58,6 @@ public class Player {
         return sips;
     }
 
-    public void setSips(int sips) {
-        this.sips = sips;
-    }
 
     public void addSips(int num) {
         sips += num;
