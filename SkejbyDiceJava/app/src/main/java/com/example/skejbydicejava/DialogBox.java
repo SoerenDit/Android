@@ -12,10 +12,12 @@ public class DialogBox extends AppCompatDialogFragment {
     private DialogBoxListener listener;
     private int sips;
     private int toBeat;
+    private int defenceDie;
     private String dialogBoxType;
     private String title;
     private String message;
-    private Player attackedPlayer;
+    private Player defendingPlayer;
+    private Player attackingPlayer;
     private String positiveButton;
     private String negativeButton;
 
@@ -23,6 +25,7 @@ public class DialogBox extends AppCompatDialogFragment {
         sips = listener.sipsToDrink();
         String sipString = "";
         toBeat = listener.highestAttackDie();
+        defenceDie = listener.defenceDie();
 
         if (sips == 1) {
             sipString = sips + " sip";
@@ -30,7 +33,8 @@ public class DialogBox extends AppCompatDialogFragment {
             sipString = sips + " sips";
         }
         dialogBoxType = listener.dialogBoxType();
-        attackedPlayer = listener.attackedPlayer();
+        defendingPlayer = listener.defendingPlayer();
+        attackingPlayer = listener.attackingPlayer();
 
         switch (dialogBoxType) {
             case "Lucky":
@@ -40,17 +44,28 @@ public class DialogBox extends AppCompatDialogFragment {
                 negativeButton = "Nope";
                 break;
             case "YouHaveBeenAttacked":
-                title = attackedPlayer.getName() + ", you are under attack!";
+                title = defendingPlayer.getName() + ", you are under attack!";
                 message = "What do you want to do?";
                 positiveButton = "I will drink my " + sipString + ".";
                 negativeButton = "I will of course defend myself!";
                 break;
             case "DefenceTime":
                 title = "Defence time!";
-                message = "Ok, " + attackedPlayer.getName() + ", you have to roll at least " + toBeat + ":";
+                message = "Ok, " + defendingPlayer.getName() + ", you have to roll at least " + toBeat + ":";
                 positiveButton = "Roll";
                 negativeButton = "";
                 break;
+            case "SuccesfulDefence":
+                System.out.println("This is also odd");
+                title = "You rolled " + defenceDie + "! Your defence is succesful!";
+                message = attackingPlayer.getName() + " has to drink 1 sip, and his lucky die is increased by one.";
+                positiveButton = "Nice";
+                break;
+            case "UnsuccesfulDefence":
+                title = "You rolled " + defenceDie + ". You didn't defend yourself...";
+                positiveButton = ":(";
+                break;
+
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -64,10 +79,17 @@ public class DialogBox extends AppCompatDialogFragment {
                                 listener.onYesClickedLucky();
                                 break;
                             case "YouHaveBeenAttacked":
-                                listener.onYesClickedAttack();
+                                listener.onIWillDrinkMySips();
                                 break;
                             case "DefenceTime":
-                                listener.onYesClickedDefence();
+                                listener.onRollClickedDefence();
+                                break;
+                            case "SuccesfulDefence":
+                                listener.onSuccesfulDefence();
+                                break;
+                            case "UnsuccesfulDefence":
+                                listener.onUnsuccesfulDefence();
+                                break;
                         }
                     }
                 })
@@ -76,7 +98,7 @@ public class DialogBox extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (dialogBoxType) {
                             case "YouHaveBeenAttacked":
-                                listener.onNoClickedAttack();
+                                listener.onIWillDefendMyself();
                                 break;
                         }
 
@@ -88,18 +110,27 @@ public class DialogBox extends AppCompatDialogFragment {
     public interface DialogBoxListener {
         void onYesClickedLucky();
 
-        void onYesClickedAttack();
-        void onNoClickedAttack();
+        void onIWillDrinkMySips();
 
-        void onYesClickedDefence();
+        void onIWillDefendMyself();
+
+        void onRollClickedDefence();
 
         int sipsToDrink();
 
         int highestAttackDie();
 
+        int defenceDie();
+
+        Player defendingPlayer();
+
+        Player attackingPlayer();
+
         String dialogBoxType();
 
-        Player attackedPlayer();
+        void onSuccesfulDefence();
+
+        void onUnsuccesfulDefence();
     }
 
     public void onAttach(Context context) {

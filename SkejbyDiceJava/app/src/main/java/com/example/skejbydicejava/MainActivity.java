@@ -22,11 +22,12 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     private TextView textViewMessage;
     private Button rollButton;
     private Die attackDie1, attackDie2;
-    private Player pos1Player, pos2Player, pos3Player, pos4Player;
-    private Player attackedPlayer;
+    private Player attackingPlayer, pos2Player, pos3Player, pos4Player;
+    private Player defendingPlayer;
     private List<Player> players;
     private int sipsToDrink;
     private int toBeat;
+    private int defenceDie;
     private String dialogBoxType;
     public static MediaPlayer mediaPlayer;
     private Random rng = new Random();
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
             }
         }
         placePlayers();
+        setDefaultValues();
     }
 
     private void placePlayers() {
@@ -109,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                     textViewPos1Name.setText(p.getName());
                     textViewPos1Sips.setText("" + p.getSips());
                     imageViewLuckyDie1.setImageResource(p.getLuckyDie().getImage());
-                    pos1Player = p;
+                    attackingPlayer = p;
                     break;
                 case 2:
                     textViewPos2Name.setText(p.getName());
@@ -137,10 +139,17 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     private void setClickListeners() {
+        rollButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attackRoll();
+            }
+        });
+
         imageViewLuckyDie1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sipsToDrink = pos1Player.getLuckyDie().getNumber();
+                sipsToDrink = attackingPlayer.getLuckyDie().getNumber();
                 dialogBoxType = "Lucky";
                 DialogBox dialogBox = new DialogBox();
                 dialogBox.show(getSupportFragmentManager(),"Eksempel1");
@@ -150,91 +159,57 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         imageViewPos2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sipsToDrink = attackValue();
-                dialogBoxType = "YouHaveBeenAttacked";
-                attackedPlayer = pos2Player;
-                DialogBox dialogBox = new DialogBox();
-                dialogBox.show(getSupportFragmentManager(),"Eksempel2");
-
+                playerIsUnderAttack(pos2Player);
             }
         });
 
         imageViewPos3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sipsToDrink = attackValue();
-                dialogBoxType = "YouHaveBeenAttacked";
-                attackedPlayer = pos3Player;
-                DialogBox dialogBox = new DialogBox();
-                dialogBox.show(getSupportFragmentManager(),"Eksempel3");
+                playerIsUnderAttack(pos3Player);;
             }
         });
 
         imageViewPos4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sipsToDrink = attackValue();
-                dialogBoxType = "YouHaveBeenAttacked";
-                attackedPlayer = pos4Player;
-                DialogBox dialogBox = new DialogBox();
-                dialogBox.show(getSupportFragmentManager(),"Eksempel4");
-            }
-        });
-
-
-        rollButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                attackDie1.roll(imageViewDie1);
-                attackDie2.roll(imageViewDie2);
-                rollButton.setEnabled(false);
-                imageViewPos2.setEnabled(true);
-                imageViewPos3.setEnabled(true);
-                imageViewPos4.setEnabled(true);
-                if (attackValue() > 1) {
-                    textViewMessage.setText("Who do you want to give " + attackValue() + " sips?");
-                } else {
-                    textViewMessage.setText("Who should drink a single sip?");
-                }
-
+                playerIsUnderAttack(pos4Player);
             }
         });
     }
 
-    private void attack(Player p, int sips) {
-        p.addSips(sips);
+    private void attackRoll() {
+        attackDie1.roll(imageViewDie1);
+        attackDie2.roll(imageViewDie2);
+        rollButton.setEnabled(false);
+        imageViewPos2.setEnabled(true);
+        imageViewPos3.setEnabled(true);
+        imageViewPos4.setEnabled(true);
+        if (attackValue() > 1) {
+            textViewMessage.setText("Who do you want to give " + attackValue() + " sips?");
+        } else {
+            textViewMessage.setText("Who should drink a single sip?");
+        }
+    }
+
+    private void playerIsUnderAttack(Player p) {
+        sipsToDrink = attackValue();
+        dialogBoxType = "YouHaveBeenAttacked";
+        defendingPlayer = p;
+        DialogBox dialogBox = new DialogBox();
+        dialogBox.show(getSupportFragmentManager(),"Eksempel2");
+    }
+
+    @Override
+    public void onIWillDrinkMySips() {
+        defendingPlayer.addSips(attackValue());
         updateSips();
-        rollButton.setEnabled(true);
-        imageViewPos2.setEnabled(false);
-        imageViewPos3.setEnabled(false);
-        imageViewPos4.setEnabled(false);
-    }
-
-    private int attackValue() {
-        return (attackDie1.getNumber() + attackDie2.getNumber()) / 2;
-    }
-
-    private void updateSips() {
-        textViewPos1Sips.setText("" + pos1Player.getSips());
-        textViewPos2Sips.setText("" + pos2Player.getSips());
-        textViewPos3Sips.setText("" + pos3Player.getSips());
-        textViewPos4Sips.setText("" + pos4Player.getSips());
-    }
-
-    @Override
-    public void onYesClickedLucky() {
-        pos1Player.getLuckyDie().roll(imageViewLuckyDie1);
-    }
-
-    @Override
-    public void onYesClickedAttack() {
-        attack(attackedPlayer, attackValue());
+        textViewMessage.setText(attackingPlayer.getName() + "'s turn. Roll!");
         rotatePlayers();
-        textViewMessage.setText(pos1Player.getName() + "'s turn. Roll!");
     }
 
     @Override
-    public void onNoClickedAttack() {
+    public void onIWillDefendMyself() {
         toBeat = Math.max(attackDie1.getNumber(),attackDie2.getNumber());
         dialogBoxType = "DefenceTime";
         DialogBox dialogBox = new DialogBox();
@@ -242,18 +217,52 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     @Override
-    public void onYesClickedDefence() {
+    public void onRollClickedDefence() {
         MainActivity.mediaPlayer.start();
-        int randomNumber = rng.nextInt(6) + 1;
-        if(randomNumber > toBeat) {
+        defenceDie = 7; // rng.nextInt(6) + 1;
+        if(defenceDie > toBeat) {
             dialogBoxType = "SuccesfulDefence";
             DialogBox dialogBox = new DialogBox();
             dialogBox.show(getSupportFragmentManager(),"Eksempel1");
         } else {
-
+            dialogBoxType = "UnsuccesfulDefence";
+            DialogBox dialogBox = new DialogBox();
+            dialogBox.show(getSupportFragmentManager(),"Eksempel1");
         }
-        System.out.println("You rolled " + randomNumber + "!");
+    }
 
+    @Override
+    public void onSuccesfulDefence() {
+        System.out.println("Adding a sip here");
+        attackingPlayer.getLuckyDie().increaseDie();
+        attackingPlayer.addSips(1);
+        rotatePlayers();
+    }
+
+    @Override
+    public void onUnsuccesfulDefence() {
+        System.out.println("This is were we SHOULD be...");
+        rotatePlayers();
+    }
+
+
+
+
+
+    private int attackValue() {
+        return (attackDie1.getNumber() + attackDie2.getNumber()) / 2;
+    }
+
+    private void updateSips() {
+        textViewPos1Sips.setText("" + attackingPlayer.getSips());
+        textViewPos2Sips.setText("" + pos2Player.getSips());
+        textViewPos3Sips.setText("" + pos3Player.getSips());
+        textViewPos4Sips.setText("" + pos4Player.getSips());
+    }
+
+    @Override
+    public void onYesClickedLucky() {
+        attackingPlayer.getLuckyDie().roll(imageViewLuckyDie1);
     }
 
     @Override
@@ -267,12 +276,26 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     @Override
+    public int defenceDie() {
+        return defenceDie;
+    }
+
+    @Override
+    public Player defendingPlayer() {
+        return defendingPlayer;
+    }
+
+    @Override
+    public Player attackingPlayer() {
+        return attackingPlayer;
+    }
+
+    @Override
     public String dialogBoxType() {
         return dialogBoxType;
     }
 
-    @Override
-    public Player attackedPlayer() {
-        return attackedPlayer;
-    }
+
+
+
 }
