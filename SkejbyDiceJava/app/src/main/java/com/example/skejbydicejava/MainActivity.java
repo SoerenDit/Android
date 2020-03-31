@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         }
         placePlayers();
         setDefaultValues();
+        textViewMessage.setText(attackingPlayer.getName() + "'s turn. Roll!");
     }
 
     private void placePlayers() {
@@ -204,7 +205,6 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     public void onIWillDrinkMySips() {
         defendingPlayer.addSips(attackValue());
         updateSips();
-        textViewMessage.setText(attackingPlayer.getName() + "'s turn. Roll!");
         rotatePlayers();
     }
 
@@ -219,8 +219,8 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     @Override
     public void onRollClickedDefence() {
         MainActivity.mediaPlayer.start();
-        defenceDie = 7; // rng.nextInt(6) + 1;
-        if(defenceDie > toBeat) {
+        defenceDie = rng.nextInt(6) + 1;
+        if(defenceDie >= toBeat) {
             dialogBoxType = "SuccesfulDefence";
             DialogBox dialogBox = new DialogBox();
             dialogBox.show(getSupportFragmentManager(),"Eksempel1");
@@ -233,15 +233,14 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
 
     @Override
     public void onSuccesfulDefence() {
-        System.out.println("Adding a sip here");
-        attackingPlayer.getLuckyDie().increaseDie();
         attackingPlayer.addSips(1);
         rotatePlayers();
     }
 
     @Override
     public void onUnsuccesfulDefence() {
-        System.out.println("This is were we SHOULD be...");
+        defendingPlayer.addSips(attackValue()+1);
+        defendingPlayer.getLuckyDie().increaseDie();
         rotatePlayers();
     }
 

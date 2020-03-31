@@ -58,11 +58,13 @@ public class DialogBox extends AppCompatDialogFragment {
             case "SuccesfulDefence":
                 System.out.println("This is also odd");
                 title = "You rolled " + defenceDie + "! Your defence is succesful!";
-                message = attackingPlayer.getName() + " has to drink 1 sip, and his lucky die is increased by one.";
+                message = attackingPlayer.getName() + " has to drink 1 sip!";
                 positiveButton = "Nice";
                 break;
             case "UnsuccesfulDefence":
                 title = "You rolled " + defenceDie + ". You didn't defend yourself...";
+                int toDrink = sips + 1;
+                message = "You have to drink " + toDrink + " sips, and your lucky die is increased by one";
                 positiveButton = ":(";
                 break;
 

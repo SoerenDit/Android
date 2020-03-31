@@ -96,11 +96,15 @@ public class Die {
     }
 
     public void increaseDie() {
-        number++;
+        if (number < 6) {
+            number++;
+        }
     }
 
     public void decreaseDie() {
-        number--;
+        if (number > 1) {
+            number--;
+        }
     }
 
     public int getImage() {
