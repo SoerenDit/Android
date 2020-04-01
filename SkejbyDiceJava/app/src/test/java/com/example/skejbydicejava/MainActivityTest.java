@@ -16,10 +16,10 @@ public class MainActivityTest {
 
     @Before
     public void setUp() {
-        p1 = new Player("Søren", 1, "brown");
-        p2 = new Player("Nikolaj", 2, "green");
-        p3 = new Player("Bjørn", 3, "blue");
-        p4 = new Player("Christian", 4, "red");
+        p1 = new Player("Søren", 1, "brown",123);
+        p2 = new Player("Nikolaj", 2, "green",123);
+        p3 = new Player("Bjørn", 3, "blue",123);
+        p4 = new Player("Christian", 4, "red",123);
 
         l1 = new Die("brown");
         l2 = new Die("green");

@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     private ImageView imageViewDie1, imageViewDie2;
     private ImageView imageViewPos2, imageViewPos3, imageViewPos4;
     private ImageView imageViewLuckyDie1, imageViewLuckyDie2, imageViewLuckyDie3, imageViewLuckyDie4;
+    private TextView textViewPos1Beer, textViewPos2Beer, textViewPos3Beer, textViewPos4Beer;
     private TextView textViewPos1Sips, textViewPos2Sips, textViewPos3Sips, textViewPos4Sips;
     private TextView textViewPos1Name, textViewPos2Name, textViewPos3Name, textViewPos4Name;
     private TextView textViewMessage;
@@ -24,12 +25,14 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     private Die attackDie1, attackDie2;
     private Player attackingPlayer, pos2Player, pos3Player, pos4Player;
     private Player defendingPlayer;
+    private Player playerToKillHisBeer;
     private List<Player> players;
     private int sipsToDrink;
     private int toBeat;
     private int defenceDie;
     private String dialogBoxType;
     public static MediaPlayer mediaPlayerRoll;
+    public static MediaPlayer mediaPlayerKill;
     public static MediaPlayer mediaPlayer;
     private Random rng = new Random();
 
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         attackDie1 = new Die("white");
         attackDie2 = new Die("white");
         mediaPlayerRoll = MediaPlayer.create(this, R.raw.diceroll);
+        mediaPlayerKill = MediaPlayer.create(this,R.raw.kill);
         setUpComponents();
 
         setDefaultValues();
@@ -61,6 +65,11 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         textViewPos2Name = findViewById(R.id.text_view_pos2Name);
         textViewPos3Name = findViewById(R.id.text_view_pos3Name);
         textViewPos4Name = findViewById(R.id.text_view_pos4Name);
+
+        textViewPos1Beer = findViewById(R.id.textViewPos1Beer);
+        textViewPos2Beer = findViewById(R.id.textViewPos2Beer);
+        textViewPos3Beer = findViewById(R.id.textViewPos3Beer);
+        textViewPos4Beer = findViewById(R.id.textViewPos4Beer);
 
         textViewPos1Sips = findViewById(R.id.text_view_pos1Sips);
         textViewPos2Sips = findViewById(R.id.text_view_pos2Sips);
@@ -105,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         textViewMessage.setText(attackingPlayer.getName() + "'s turn. Roll!");
     }
 
-    private void playSound(int sound) {
+    public void playSound(int sound) {
         if(mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
@@ -120,12 +129,14 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
             switch (p.getPos()) {
                 case 1:
                     textViewPos1Name.setText(p.getName());
+                    textViewPos1Beer.setText("" + p.getBeer());
                     textViewPos1Sips.setText("" + p.getSips());
                     imageViewLuckyDie1.setImageResource(p.getLuckyDie().getImage());
                     attackingPlayer = p;
                     break;
                 case 2:
                     textViewPos2Name.setText(p.getName());
+                    textViewPos2Beer.setText("" + p.getBeer());
                     textViewPos2Sips.setText("" + p.getSips());
                     imageViewPos2.setImageResource(p.getToken());
                     imageViewLuckyDie2.setImageResource(p.getLuckyDie().getImage());
@@ -133,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                     break;
                 case 3:
                     textViewPos3Name.setText(p.getName());
+                    textViewPos3Beer.setText("" + p.getBeer());
                     textViewPos3Sips.setText("" + p.getSips());
                     imageViewPos3.setImageResource(p.getToken());
                     imageViewLuckyDie3.setImageResource(p.getLuckyDie().getImage());
@@ -140,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                     break;
                 case 4:
                     textViewPos4Name.setText(p.getName());
+                    textViewPos4Beer.setText("" + p.getBeer());
                     textViewPos4Sips.setText("" + p.getSips());
                     imageViewPos4.setImageResource(p.getToken());
                     imageViewLuckyDie4.setImageResource(p.getLuckyDie().getImage());
@@ -210,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         if (attackDie1.getNumber() == attackDie2.getNumber()) {
             switch (attackDie1.getNumber()) {
                 case 1:
-                    // ones();
+                    ones();
                     break;
                 case 2:
                     // deepWaterSoloYolo();
@@ -231,6 +244,18 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
             return true;
         }
         return false;
+    }
+
+    private void ones() {
+        playerToKillHisBeer = attackingPlayer;
+        dialogBoxType = "Kill";
+        DialogBox dialogBox = new DialogBox();
+        dialogBox.show(getSupportFragmentManager(), "Eksempel1");
+    }
+
+    public void onKill() {
+        playerToKillHisBeer.addSips(14);
+        rotatePlayers();
     }
 
     private void pair(int i) {
@@ -306,8 +331,6 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
 
-
-
     private int attackValue() {
         return (attackDie1.getNumber() + attackDie2.getNumber()) / 2;
     }
@@ -321,7 +344,10 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
 
     @Override
     public void onYesClickedLucky() {
-        attackingPlayer.getLuckyDie().roll(imageViewLuckyDie1);
+        Die luckyDie = attackingPlayer.getLuckyDie();
+        attackingPlayer.addSips(luckyDie.getNumber());
+        placePlayers();
+        luckyDie.roll(imageViewLuckyDie1);
     }
 
     @Override
@@ -348,6 +374,12 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     public Player attackingPlayer() {
         return attackingPlayer;
     }
+
+    @Override
+    public Player playerToKillHisBeer() {
+        return playerToKillHisBeer;
+    }
+
 
     @Override
     public String dialogBoxType() {

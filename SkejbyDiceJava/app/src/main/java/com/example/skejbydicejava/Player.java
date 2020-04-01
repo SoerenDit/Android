@@ -4,6 +4,7 @@ public class Player {
     private String name;
     private String color;
     private int sips;
+    private int beer;
     private int pos;
     private int token;
     private Die lucky;
@@ -16,6 +17,7 @@ public class Player {
         this.color = color;
         this.media = media;
         lucky = new Die(color);
+        beer = 0;
         sips = 0;
     }
 
@@ -63,6 +65,14 @@ public class Player {
     public int getMedia() {return media; }
 
     public void addSips(int num) {
-        sips += num;
+        if(sips + num < 14) {
+            sips += num;
+        } else {
+            MainActivity.mediaPlayerKill.start();
+            beer += 1;
+            sips = 0;
+        }
     }
+
+    public int getBeer() {return beer;}
 }

@@ -18,6 +18,7 @@ public class DialogBox extends AppCompatDialogFragment {
     private String message;
     private Player defendingPlayer;
     private Player attackingPlayer;
+    private Player playerToKillHisBeer;
     private String positiveButton;
     private String negativeButton;
 
@@ -35,6 +36,7 @@ public class DialogBox extends AppCompatDialogFragment {
         dialogBoxType = listener.dialogBoxType();
         defendingPlayer = listener.defendingPlayer();
         attackingPlayer = listener.attackingPlayer();
+        playerToKillHisBeer = listener.playerToKillHisBeer();
 
         switch (dialogBoxType) {
             case "Lucky":
@@ -72,6 +74,11 @@ public class DialogBox extends AppCompatDialogFragment {
                 message = "Everyone has to drink " + sipString;
                 positiveButton = "Cheers";
                 break;
+            case "Kill":
+                title = "Finish it!";
+                message = playerToKillHisBeer.getName() + ", you have to kill your beer.";
+                positiveButton = "SKÅÅÅL";
+
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -99,6 +106,8 @@ public class DialogBox extends AppCompatDialogFragment {
                             case "Pair":
                                 listener.onPairs();
                                 break;
+                            case "Kill":
+                                listener.onKill();
                         }
                     }
                 })
@@ -135,6 +144,8 @@ public class DialogBox extends AppCompatDialogFragment {
 
         Player attackingPlayer();
 
+        Player playerToKillHisBeer();
+
         String dialogBoxType();
 
         void onSuccesfulDefence();
@@ -142,6 +153,8 @@ public class DialogBox extends AppCompatDialogFragment {
         void onUnsuccesfulDefence();
 
         void onPairs();
+
+        void onKill();
     }
 
     public void onAttach(Context context) {
