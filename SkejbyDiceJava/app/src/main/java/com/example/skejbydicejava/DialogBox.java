@@ -67,7 +67,11 @@ public class DialogBox extends AppCompatDialogFragment {
                 message = "You have to drink " + toDrink + " sips, and your lucky die is increased by one";
                 positiveButton = ":(";
                 break;
-
+            case "Pair":
+                title = "You rolled a pair of " + sips + "'s!";
+                message = "Everyone has to drink " + sipString;
+                positiveButton = "Cheers";
+                break;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -91,6 +95,9 @@ public class DialogBox extends AppCompatDialogFragment {
                                 break;
                             case "UnsuccesfulDefence":
                                 listener.onUnsuccesfulDefence();
+                                break;
+                            case "Pair":
+                                listener.onPairs();
                                 break;
                         }
                     }
@@ -133,6 +140,8 @@ public class DialogBox extends AppCompatDialogFragment {
         void onSuccesfulDefence();
 
         void onUnsuccesfulDefence();
+
+        void onPairs();
     }
 
     public void onAttach(Context context) {
