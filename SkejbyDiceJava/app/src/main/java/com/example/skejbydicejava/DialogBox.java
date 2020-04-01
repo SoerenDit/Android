@@ -78,7 +78,12 @@ public class DialogBox extends AppCompatDialogFragment {
                 title = "Finish it!";
                 message = playerToKillHisBeer.getName() + ", you have to kill your beer.";
                 positiveButton = "SKÅÅÅL";
-
+                break;
+            case "DWSY":
+                title = "DEEP WATER SOLO YOLO!";
+                message = "Everyone has to yell \"Deep Water Solo YOLO!\". Whoever is last has to drink 8 sips.";
+                positiveButton = "Noice";
+                break;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -108,6 +113,10 @@ public class DialogBox extends AppCompatDialogFragment {
                                 break;
                             case "Kill":
                                 listener.onKill();
+                                break;
+                            case "DWSY":
+                                listener.onDeepWaterSoloYolo();
+                                break;
                         }
                     }
                 })
@@ -155,6 +164,8 @@ public class DialogBox extends AppCompatDialogFragment {
         void onPairs();
 
         void onKill();
+
+        void onDeepWaterSoloYolo();
     }
 
     public void onAttach(Context context) {

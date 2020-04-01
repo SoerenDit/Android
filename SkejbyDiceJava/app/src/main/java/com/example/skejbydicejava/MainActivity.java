@@ -13,16 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-<<<<<<< HEAD
-/*
-    This game has XXX phases:
-    Phase 0: Roll first time for attacking
- */
-
-public class MainActivity extends AppCompatActivity {
-=======
 public class MainActivity extends AppCompatActivity implements DialogBox.DialogBoxListener {
->>>>>>> 32e955f0645977d2ce7b0660117ed3033ee3cb4f
     private ImageView imageViewDie1, imageViewDie2;
     private ImageView imageViewPos2, imageViewPos3, imageViewPos4;
     private ImageView imageViewLuckyDie1, imageViewLuckyDie2, imageViewLuckyDie3, imageViewLuckyDie4;
@@ -184,8 +175,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
             public void onClick(View v) {
                 sipsToDrink = attackingPlayer.getLuckyDie().getNumber();
                 dialogBoxType = "Lucky";
-                DialogBox dialogBox = new DialogBox();
-                dialogBox.show(getSupportFragmentManager(), "Eksempel1");
+                newDialog();
             }
         });
 
@@ -235,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                     ones();
                     break;
                 case 2:
-                    // deepWaterSoloYolo();
+                    deepWaterSoloYolo();
                     break;
                 case 3:
                     pair(3);
@@ -255,11 +245,29 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         return false;
     }
 
+
+
     private void ones() {
         playerToKillHisBeer = attackingPlayer;
         dialogBoxType = "Kill";
+        newDialog();
+
+    }
+
+    private void newDialog() {
         DialogBox dialogBox = new DialogBox();
         dialogBox.show(getSupportFragmentManager(), "Eksempel1");
+    }
+
+    private void deepWaterSoloYolo() {
+        playSound(R.raw.deepwatersolo);
+        dialogBoxType = "DWSY";
+        newDialog();
+    }
+
+    @Override
+    public void onDeepWaterSoloYolo() {
+        rotatePlayers();
     }
 
     public void onKill() {
@@ -267,11 +275,12 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         rotatePlayers();
     }
 
+
+
     private void pair(int i) {
         sipsToDrink = i;
         dialogBoxType = "Pair";
-        DialogBox dialogBox = new DialogBox();
-        dialogBox.show(getSupportFragmentManager(), "Eksempel1");
+        newDialog();
     }
 
     @Override
@@ -286,8 +295,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         sipsToDrink = attackValue();
         dialogBoxType = "YouHaveBeenAttacked";
         defendingPlayer = p;
-        DialogBox dialogBox = new DialogBox();
-        dialogBox.show(getSupportFragmentManager(), "Eksempel2");
+        newDialog();
     }
 
     @Override
@@ -301,8 +309,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     public void onIWillDefendMyself() {
         toBeat = Math.max(attackDie1.getNumber(), attackDie2.getNumber());
         dialogBoxType = "DefenceTime";
-        DialogBox dialogBox = new DialogBox();
-        dialogBox.show(getSupportFragmentManager(), "Eksempel1");
+        newDialog();
     }
 
     @Override
@@ -312,8 +319,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         if (defenceDie >= toBeat) {
             playSound(R.raw.denied);
             dialogBoxType = "SuccesfulDefence";
-            DialogBox dialogBox = new DialogBox();
-            dialogBox.show(getSupportFragmentManager(), "Eksempel1");
+            newDialog();
         } else {
             if(rng.nextInt(2)==1) {
                 playSound(R.raw.fail);
@@ -321,8 +327,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                 playSound(R.raw.fail2);
             }
             dialogBoxType = "UnsuccesfulDefence";
-            DialogBox dialogBox = new DialogBox();
-            dialogBox.show(getSupportFragmentManager(), "Eksempel1");
+            newDialog();
         }
     }
 
