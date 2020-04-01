@@ -33,11 +33,13 @@
         android:id="@+id/text_view_pos1SipsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
         android:layout_marginBottom="6dp"
         android:text="Sips:"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/lucky_die_pos1"
-        app:layout_constraintStart_toStartOf="@+id/text_view_pos1Name" />
+        app:layout_constraintStart_toEndOf="@+id/textViewPos1Beer" />
 
     <TextView
         android:id="@+id/text_view_pos4Sips"
@@ -49,7 +51,7 @@
         android:text="0"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/text_view_pos4SipsText"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_pos4Name" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPos4Beer" />
 
     <TextView
         android:id="@+id/text_view_pos3Sips"
@@ -73,16 +75,18 @@
         android:text="0"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/text_view_pos2SipsText"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_pos2Name" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPos2BeerText" />
 
     <TextView
         android:id="@+id/text_view_pos3SipsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
         android:layout_marginTop="6dp"
         android:text="Sips:"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/text_view_pos3Name"
+        app:layout_constraintStart_toEndOf="@+id/textViewPos3Beer"
         app:layout_constraintTop_toBottomOf="@+id/text_view_pos3Name" />
 
     <TextView
@@ -93,7 +97,7 @@
         android:text="Sips:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/text_view_pos4Name"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_pos4Name" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPos4BeerText" />
 
     <ImageView
         android:id="@+id/image_view_die1"
@@ -202,7 +206,7 @@
         android:text="Sips:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/text_view_pos2Name"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_pos2Name" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPos2BeerText" />
 
     <TextView
         android:id="@+id/text_view_message"
@@ -259,5 +263,91 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/brownl1" />
+
+    <TextView
+        android:id="@+id/textViewPos1BeerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginBottom="6dp"
+        android:text="Beer:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/lucky_die_pos1"
+        app:layout_constraintEnd_toStartOf="@+id/textViewPos1Beer" />
+
+    <TextView
+        android:id="@+id/textViewPos1Beer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/text_view_pos1SipsText"
+        app:layout_constraintStart_toStartOf="@+id/text_view_pos1Name" />
+
+    <TextView
+        android:id="@+id/textViewPos2BeerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Beer:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/text_view_pos2Name"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_pos2Name" />
+
+    <TextView
+        android:id="@+id/textViewPos2Beer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:text="0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewPos2BeerText"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_pos2Name" />
+
+    <TextView
+        android:id="@+id/textViewPos4BeerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Beer:"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/text_view_pos4Name"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_pos4Name" />
+
+    <TextView
+        android:id="@+id/textViewPos4Beer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:text="0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewPos4BeerText"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_pos4Name" />
+
+    <TextView
+        android:id="@+id/textViewPos3BeerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
+        android:text="Beer:"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewPos3Beer"
+        app:layout_constraintTop_toTopOf="@+id/text_view_pos3SipsText" />
+
+    <TextView
+        android:id="@+id/textViewPos3Beer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="0"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/text_view_pos3Name"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_pos3Name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
