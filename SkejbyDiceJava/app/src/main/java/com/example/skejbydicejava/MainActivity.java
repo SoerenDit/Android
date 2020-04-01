@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     private int defenceDie;
     private String dialogBoxType;
     public static MediaPlayer mediaPlayerRoll;
-    public static MediaPlayer mediaPlayerRotate;
+    public static MediaPlayer mediaPlayer;
     private Random rng = new Random();
 
 
@@ -40,14 +40,13 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         super.onCreate(savedInstanceState);
 
         players = new ArrayList<>();
-        players.add(new Player("Søren", 1, "brown"));
-        players.add(new Player("Nikolaj", 2, "green"));
-        players.add(new Player("Bjørn", 3, "blue"));
-        players.add(new Player("Christian", 4, "red"));
+        players.add(new Player("Søren", 1, "brown",R.raw.rotating));
+        players.add(new Player("Nikolaj", 2, "green",R.raw.dolphin));
+        players.add(new Player("Bjørn", 3, "blue",R.raw.rubberduck));
+        players.add(new Player("Christian", 4, "red",R.raw.carhorn));
         attackDie1 = new Die("white");
         attackDie2 = new Die("white");
         mediaPlayerRoll = MediaPlayer.create(this, R.raw.diceroll);
-        mediaPlayerRotate = MediaPlayer.create(this, R.raw.rotating);
         setUpComponents();
 
         setDefaultValues();
@@ -93,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     private void rotatePlayers() {
-        mediaPlayerRotate.start();
         for (Player p : players) {
             if (p.getPos() == 4) {
                 p.setPos(1);
@@ -102,8 +100,23 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
             }
         }
         placePlayers();
+        playSound(attackingPlayer.getMedia());
         setDefaultValues();
         textViewMessage.setText(attackingPlayer.getName() + "'s turn. Roll!");
+    }
+
+    private void playSound(int sound) {
+        if(mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        mediaPlayer = MediaPlayer.create(this, sound);
+        mediaPlayer.start();
+
+    }
+
+    private void resetMediaPlayer() {
+
     }
 
     private void placePlayers() {
@@ -279,6 +292,8 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
 
     @Override
     public void onSuccesfulDefence() {
+        resetMediaPlayer();
+
         attackingPlayer.addSips(1);
         rotatePlayers();
     }

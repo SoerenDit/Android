@@ -62,6 +62,7 @@ public class Die {
     }
 
     public int roll(ImageView imageViewDie) {
+
         MainActivity.mediaPlayerRoll.start();
         int randomNumber = rng.nextInt(6) + 1;
         number = randomNumber;

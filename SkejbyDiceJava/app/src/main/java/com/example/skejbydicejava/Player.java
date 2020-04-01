@@ -7,12 +7,14 @@ public class Player {
     private int pos;
     private int token;
     private Die lucky;
+    private int media;
 
-    public Player(String name, int pos, String color) {
+    public Player(String name, int pos, String color, int media) {
         this.name = name;
         this.pos = pos;
         setToken(color);
         this.color = color;
+        this.media = media;
         lucky = new Die(color);
         sips = 0;
     }
@@ -58,6 +60,7 @@ public class Player {
         return sips;
     }
 
+    public int getMedia() {return media; }
 
     public void addSips(int num) {
         sips += num;
