@@ -1,21 +1,31 @@
 package com.example.skejbydicejava;
 
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class LuckyDie {
+public class Die {
     private int number;
     private List<Integer> numberPics;
+    private Random rng = new Random();
 
-
-    public LuckyDie(String color) {
-        number = 1;
+    public Die(String color) {
         numberPics = new ArrayList<>();
+        number = 1;
         setNumberPics(color);
     }
 
     private void setNumberPics(String color) {
         switch (color) {
+            case "white":
+                numberPics.add(R.drawable.d1);
+                numberPics.add(R.drawable.d2);
+                numberPics.add(R.drawable.d3);
+                numberPics.add(R.drawable.d4);
+                numberPics.add(R.drawable.d5);
+                numberPics.add(R.drawable.d6);
             case "brown":
                 numberPics.add(R.drawable.brownl1);
                 numberPics.add(R.drawable.brownl2);
@@ -51,19 +61,55 @@ public class LuckyDie {
         }
     }
 
+    public int roll(ImageView imageViewDie) {
+
+        MainActivity.mediaPlayerRoll.start();
+        int randomNumber = rng.nextInt(6) + 1;
+        number = randomNumber;
+
+        switch (randomNumber) {
+            case 1:
+                imageViewDie.setImageResource(numberPics.get(0));
+                break;
+            case 2:
+                imageViewDie.setImageResource(numberPics.get(1));
+                break;
+            case 3:
+                imageViewDie.setImageResource(numberPics.get(2));
+                break;
+            case 4:
+                imageViewDie.setImageResource(numberPics.get(3));
+                break;
+            case 5:
+                imageViewDie.setImageResource(numberPics.get(4));
+                break;
+            case 6:
+                imageViewDie.setImageResource(numberPics.get(5));
+                break;
+        }
+        return randomNumber;
+
+    }
+
     public int getNumber() {
         return number;
     }
 
-    public void setNumber(int n) {
-        number = n;
-    }
-
     public void increaseDie() {
-        number++;
+        if (number < 6) {
+            number++;
+        }
     }
 
-    public int getState() {
-        return numberPics.get(number-1);
+    public void decreaseDie() {
+        if (number > 1) {
+            number--;
+        }
     }
+
+    public int getImage() {
+        return numberPics.get(number - 1);
+    }
+
+
 }

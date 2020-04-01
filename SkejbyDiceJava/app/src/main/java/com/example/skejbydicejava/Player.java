@@ -6,14 +6,16 @@ public class Player {
     private int sips;
     private int pos;
     private int token;
-    private LuckyDie d;
+    private Die lucky;
+    private int media;
 
-    public Player(String name, int pos, String color) {
+    public Player(String name, int pos, String color, int media) {
         this.name = name;
         this.pos = pos;
         setToken(color);
         this.color = color;
-        this.d = new LuckyDie(color);
+        this.media = media;
+        lucky = new Die(color);
         sips = 0;
     }
 
@@ -34,10 +36,9 @@ public class Player {
         }
     }
 
-    public LuckyDie getLuckyDie() {
-        return d;
+    public Die getLuckyDie() {
+        return lucky;
     }
-
 
     public int getToken() {
         return token;
@@ -59,9 +60,7 @@ public class Player {
         return sips;
     }
 
-    public void setSips(int sips) {
-        this.sips = sips;
-    }
+    public int getMedia() {return media; }
 
     public void addSips(int num) {
         sips += num;
