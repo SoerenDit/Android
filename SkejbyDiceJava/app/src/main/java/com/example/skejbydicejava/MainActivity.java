@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     private int toBeat;
     private int defenceDie;
     private String dialogBoxType;
-    public static MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayerRoll;
+    public static MediaPlayer mediaPlayerRotate;
     private Random rng = new Random();
 
 
@@ -46,8 +47,8 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         players.add(new Player("Christian", 4, "red"));
         attackDie1 = new Die("white");
         attackDie2 = new Die("white");
-        mediaPlayer = MediaPlayer.create(this, R.raw.diceroll);
-
+        mediaPlayerRoll = MediaPlayer.create(this, R.raw.diceroll);
+        mediaPlayerRotate = MediaPlayer.create(this, R.raw.rotating);
         setUpComponents();
 
         setDefaultValues();
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     private void rotatePlayers() {
+        mediaPlayerRotate.start();
         for (Player p : players) {
             if (p.getPos() == 4) {
                 p.setPos(1);
@@ -218,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
 
     @Override
     public void onRollClickedDefence() {
-        MainActivity.mediaPlayer.start();
+        MainActivity.mediaPlayerRoll.start();
         defenceDie = rng.nextInt(6) + 1;
         if(defenceDie >= toBeat) {
             dialogBoxType = "SuccesfulDefence";

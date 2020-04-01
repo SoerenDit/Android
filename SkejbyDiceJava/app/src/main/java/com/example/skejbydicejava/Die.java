@@ -1,6 +1,5 @@
 package com.example.skejbydicejava;
 
-import android.media.MediaPlayer;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -63,7 +62,7 @@ public class Die {
     }
 
     public int roll(ImageView imageViewDie) {
-        MainActivity.mediaPlayer.start();
+        MainActivity.mediaPlayerRoll.start();
         int randomNumber = rng.nextInt(6) + 1;
         number = randomNumber;
 
