@@ -115,10 +115,6 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
 
     }
 
-    private void resetMediaPlayer() {
-
-    }
-
     private void placePlayers() {
         for (Player p : players) {
             switch (p.getPos()) {
@@ -280,10 +276,16 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         MainActivity.mediaPlayerRoll.start();
         defenceDie = rng.nextInt(6) + 1;
         if (defenceDie >= toBeat) {
+            playSound(R.raw.denied);
             dialogBoxType = "SuccesfulDefence";
             DialogBox dialogBox = new DialogBox();
             dialogBox.show(getSupportFragmentManager(), "Eksempel1");
         } else {
+            if(rng.nextInt(2)==1) {
+                playSound(R.raw.fail);
+            } else {
+                playSound(R.raw.fail2);
+            }
             dialogBoxType = "UnsuccesfulDefence";
             DialogBox dialogBox = new DialogBox();
             dialogBox.show(getSupportFragmentManager(), "Eksempel1");
@@ -292,8 +294,6 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
 
     @Override
     public void onSuccesfulDefence() {
-        resetMediaPlayer();
-
         attackingPlayer.addSips(1);
         rotatePlayers();
     }
