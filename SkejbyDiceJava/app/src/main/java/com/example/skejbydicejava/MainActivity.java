@@ -13,7 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+<<<<<<< HEAD
+/*
+    This game has XXX phases:
+    Phase 0: Roll first time for attacking
+ */
+
+public class MainActivity extends AppCompatActivity {
+=======
 public class MainActivity extends AppCompatActivity implements DialogBox.DialogBoxListener {
+>>>>>>> 32e955f0645977d2ce7b0660117ed3033ee3cb4f
     private ImageView imageViewDie1, imageViewDie2;
     private ImageView imageViewPos2, imageViewPos3, imageViewPos4;
     private ImageView imageViewLuckyDie1, imageViewLuckyDie2, imageViewLuckyDie3, imageViewLuckyDie4;
