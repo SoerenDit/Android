@@ -215,7 +215,16 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
             } else {
                 textViewMessage.setText("Who should drink a single sip?");
             }
+        } else if (attackDie1.getNumber() == 6 & attackDie2.getNumber() == 6) {
+
         }
+    }
+
+    private void playerIsUnderAttack(Player p) {
+        sipsToDrink = attackValue();
+        dialogBoxType = "YouHaveBeenAttackedRegular";
+        defendingPlayer = p;
+        newDialog();
     }
 
     private boolean specialRoll() {
@@ -237,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                     pair(5);
                     break;
                 case 6:
-                    // sixes();
+                    sixes();
                     break;
             }
             return true;
@@ -245,6 +254,9 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         return false;
     }
 
+    private void sixes() {
+
+    }
 
 
     private void ones() {
@@ -254,10 +266,6 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
 
     }
 
-    private void newDialog() {
-        DialogBox dialogBox = new DialogBox();
-        dialogBox.show(getSupportFragmentManager(), "Eksempel1");
-    }
 
     private void deepWaterSoloYolo() {
         playSound(R.raw.deepwatersolo);
@@ -291,12 +299,6 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         rotatePlayers();
     }
 
-    private void playerIsUnderAttack(Player p) {
-        sipsToDrink = attackValue();
-        dialogBoxType = "YouHaveBeenAttacked";
-        defendingPlayer = p;
-        newDialog();
-    }
 
     @Override
     public void onIWillDrinkMySips() {
@@ -330,6 +332,12 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
             newDialog();
         }
     }
+
+    private void newDialog() {
+        DialogBox dialogBox = new DialogBox();
+        dialogBox.show(getSupportFragmentManager(), "Eksempel1");
+    }
+
 
     @Override
     public void onSuccesfulDefence() {

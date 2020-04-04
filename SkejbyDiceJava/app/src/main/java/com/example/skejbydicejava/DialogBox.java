@@ -45,7 +45,7 @@ public class DialogBox extends AppCompatDialogFragment {
                 positiveButton = "Ok";
                 negativeButton = "Nope";
                 break;
-            case "YouHaveBeenAttacked":
+            case "YouHaveBeenAttackedRegular":
                 title = defendingPlayer.getName() + ", you are under attack!";
                 message = "What do you want to do?";
                 positiveButton = "I will drink my " + sipString + ".";
@@ -96,7 +96,7 @@ public class DialogBox extends AppCompatDialogFragment {
                             case "Lucky":
                                 listener.onYesClickedLucky();
                                 break;
-                            case "YouHaveBeenAttacked":
+                            case "YouHaveBeenAttackedRegular":
                                 listener.onIWillDrinkMySips();
                                 break;
                             case "DefenceTime":
@@ -124,7 +124,7 @@ public class DialogBox extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (dialogBoxType) {
-                            case "YouHaveBeenAttacked":
+                            case "YouHaveBeenAttackedRegular":
                                 listener.onIWillDefendMyself();
                                 break;
                         }
