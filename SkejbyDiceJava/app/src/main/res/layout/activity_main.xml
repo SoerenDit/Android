@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginBottom="6dp"
         android:text="0"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/lucky_die_pos1"
@@ -22,7 +21,6 @@
         android:id="@+id/text_view_pos1Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="pos1Name"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/text_view_pos1SipsText"
@@ -35,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginBottom="6dp"
         android:text="Sips:"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/lucky_die_pos1"
@@ -47,11 +44,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
         android:text="0"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/text_view_pos4SipsText"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPos4Beer" />
+        app:layout_constraintTop_toTopOf="@+id/text_view_pos4SipsText" />
 
     <TextView
         android:id="@+id/text_view_pos3Sips"
@@ -59,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="3dp"
         android:text="0"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/text_view_pos3SipsText"
@@ -67,15 +63,14 @@
 
     <TextView
         android:id="@+id/text_view_pos2Sips"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="13dp"
+        android:layout_height="25dp"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
         android:text="0"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/text_view_pos2SipsText"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPos2BeerText" />
+        app:layout_constraintTop_toTopOf="@+id/text_view_pos2SipsText" />
 
     <TextView
         android:id="@+id/text_view_pos3SipsText"
@@ -83,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="3dp"
         android:text="Sips:"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/textViewPos3Beer"
@@ -93,7 +88,6 @@
         android:id="@+id/text_view_pos4SipsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:text="Sips:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/text_view_pos4Name"
@@ -169,7 +163,6 @@
         android:id="@+id/text_view_pos2Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:text="pos2Name"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/image_view_pos2"
@@ -180,7 +173,6 @@
         android:id="@+id/text_view_pos3Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:text="pos3Name"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/image_view_pos3"
@@ -191,7 +183,6 @@
         android:id="@+id/text_view_pos4Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:text="pos4Name"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/image_view_pos4"
@@ -202,7 +193,6 @@
         android:id="@+id/text_view_pos2SipsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:text="Sips:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/text_view_pos2Name"
@@ -225,9 +215,8 @@
         android:id="@+id/lucky_die_pos2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="39dp"
-        android:layout_marginLeft="39dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_pos2SipsText"
         app:srcCompat="@drawable/gl1" />
@@ -236,9 +225,8 @@
         android:id="@+id/lucky_die_pos3"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="3dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.467"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_pos3SipsText"
         app:srcCompat="@drawable/bluel1" />
@@ -247,9 +235,8 @@
         android:id="@+id/lucky_die_pos4"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginRight="39dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_pos4SipsText"
         app:srcCompat="@drawable/redl1" />
@@ -270,7 +257,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="6dp"
         android:layout_marginRight="6dp"
-        android:layout_marginBottom="6dp"
         android:text="Beer:"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/lucky_die_pos1"
@@ -289,7 +275,6 @@
         android:id="@+id/textViewPos2BeerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:text="Beer:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/text_view_pos2Name"
@@ -301,17 +286,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
         android:text="0"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/textViewPos2BeerText"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_pos2Name" />
+        app:layout_constraintTop_toTopOf="@+id/textViewPos2BeerText" />
 
     <TextView
         android:id="@+id/textViewPos4BeerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:text="Beer:"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/text_view_pos4Name"
@@ -323,11 +306,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="6dp"
         android:text="0"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/textViewPos4BeerText"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_pos4Name" />
+        app:layout_constraintTop_toTopOf="@+id/textViewPos4BeerText" />
 
     <TextView
         android:id="@+id/textViewPos3BeerText"
@@ -344,10 +326,19 @@
         android:id="@+id/textViewPos3Beer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="3dp"
         android:text="0"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/text_view_pos3Name"
         app:layout_constraintTop_toBottomOf="@+id/text_view_pos3Name" />
+
+    <ImageView
+        android:id="@+id/image_view_pos1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_pos1Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/token1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

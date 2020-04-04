@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements DialogBox.DialogBoxListener {
     private ImageView imageViewDie1, imageViewDie2;
-    private ImageView imageViewPos2, imageViewPos3, imageViewPos4;
+    private ImageView imageViewPos1, imageViewPos2, imageViewPos3, imageViewPos4;
     private ImageView imageViewLuckyDie1, imageViewLuckyDie2, imageViewLuckyDie3, imageViewLuckyDie4;
     private TextView textViewPos1Beer, textViewPos2Beer, textViewPos3Beer, textViewPos4Beer;
     private TextView textViewPos1Sips, textViewPos2Sips, textViewPos3Sips, textViewPos4Sips;
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     private Player attackingPlayer, pos2Player, pos3Player, pos4Player;
     private Player defendingPlayer;
     private Player playerToKillHisBeer;
+    private Player chosenPlayer;
     private List<Player> players;
     private int sipsToDrink;
     private int toBeat;
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         imageViewLuckyDie3 = findViewById(R.id.lucky_die_pos3);
         imageViewLuckyDie4 = findViewById(R.id.lucky_die_pos4);
 
+        imageViewPos1 = findViewById(R.id.image_view_pos1);
         imageViewPos2 = findViewById(R.id.image_view_pos2);
         imageViewPos3 = findViewById(R.id.image_view_pos3);
         imageViewPos4 = findViewById(R.id.image_view_pos4);
@@ -101,6 +103,9 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     private void rotatePlayers() {
+        imageViewPos1.setVisibility(View.VISIBLE);
+        imageViewDie1.setVisibility(View.INVISIBLE);
+        imageViewDie2.setVisibility(View.INVISIBLE);
         for (Player p : players) {
             if (p.getPos() == 4) {
                 p.setPos(1);
@@ -131,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
                     textViewPos1Name.setText(p.getName());
                     textViewPos1Beer.setText("" + p.getBeer());
                     textViewPos1Sips.setText("" + p.getSips());
+                    imageViewPos1.setImageResource(p.getToken());
                     imageViewLuckyDie1.setImageResource(p.getLuckyDie().getImage());
                     attackingPlayer = p;
                     break;
@@ -203,6 +209,9 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     private void attackRoll() {
+        imageViewDie1.setVisibility(View.VISIBLE);
+        imageViewDie2.setVisibility(View.VISIBLE);
+        imageViewPos1.setVisibility(View.INVISIBLE);
         attackDie1.roll(imageViewDie1);
         attackDie2.roll(imageViewDie2);
         if (!specialRoll()) {
