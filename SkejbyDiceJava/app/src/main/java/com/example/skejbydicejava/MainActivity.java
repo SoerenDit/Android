@@ -44,14 +44,14 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         super.onCreate(savedInstanceState);
 
         players = new ArrayList<>();
-        players.add(new Player("Søren", 1, "brown",R.raw.rotating));
-        players.add(new Player("Nikolaj", 2, "green",R.raw.dolphin));
-        players.add(new Player("Bjørn", 3, "blue",R.raw.rubberduck));
-        players.add(new Player("Christian", 4, "red",R.raw.carhorn));
+        players.add(new Player("Søren", 1, "brown", R.raw.rotating));
+        players.add(new Player("Nikolaj", 2, "green", R.raw.dolphin));
+        players.add(new Player("Bjørn", 3, "blue", R.raw.rubberduck));
+        players.add(new Player("Christian", 4, "red", R.raw.carhorn));
         attackDie1 = new Die("white");
         attackDie2 = new Die("white");
         mediaPlayerRoll = MediaPlayer.create(this, R.raw.diceroll);
-        mediaPlayerKill = MediaPlayer.create(this,R.raw.kill);
+        mediaPlayerKill = MediaPlayer.create(this, R.raw.kill);
         setUpComponents();
 
         setDefaultValues();
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
 
     private void setDefaultValues() {
         rollButton.setEnabled(true);
+        imageViewLuckyDie1.setEnabled(true);
         imageViewPos2.setEnabled(false);
         imageViewPos3.setEnabled(false);
         imageViewPos4.setEnabled(false);
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     public void playSound(int sound) {
-        if(mediaPlayer != null) {
+        if (mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
         }
@@ -185,28 +186,35 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
             }
         });
 
+        imageViewPos1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playerChosen(attackingPlayer);
+            }
+        });
+
         imageViewPos2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerIsUnderAttack(pos2Player);
+                playerChosen(pos2Player);
             }
         });
 
         imageViewPos3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerIsUnderAttack(pos3Player);
-                ;
+                playerChosen(pos3Player);
             }
         });
 
         imageViewPos4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playerIsUnderAttack(pos4Player);
+                playerChosen(pos4Player);
             }
         });
     }
+
 
     private void attackRoll() {
         imageViewDie1.setVisibility(View.VISIBLE);
@@ -215,6 +223,8 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         attackDie1.roll(imageViewDie1);
         attackDie2.roll(imageViewDie2);
         if (!specialRoll()) {
+            sipsToDrink = attackValue();
+            dialogBoxType = "YouHaveBeenAttackedRegular";
             rollButton.setEnabled(false);
             imageViewPos2.setEnabled(true);
             imageViewPos3.setEnabled(true);
@@ -224,17 +234,19 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
             } else {
                 textViewMessage.setText("Who should drink a single sip?");
             }
-        } else if (attackDie1.getNumber() == 6 & attackDie2.getNumber() == 6) {
-
         }
     }
 
-    private void playerIsUnderAttack(Player p) {
-        sipsToDrink = attackValue();
-        dialogBoxType = "YouHaveBeenAttackedRegular";
+    private int attackValue() {
+        return (attackDie1.getNumber() + attackDie2.getNumber()) / 2;
+    }
+
+    private void playerChosen(Player p) {
         defendingPlayer = p;
         newDialog();
     }
+
+
 
     private boolean specialRoll() {
         if (attackDie1.getNumber() == attackDie2.getNumber()) {
@@ -264,6 +276,12 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
     private void sixes() {
+        sipsToDrink = 14;
+        dialogBoxType = "YouHaveBeenAttacked66";
+        rollButton.setEnabled(false);
+        imageViewPos2.setEnabled(true);
+        imageViewPos3.setEnabled(true);
+        imageViewPos4.setEnabled(true);
 
     }
 
@@ -278,12 +296,36 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
 
     private void deepWaterSoloYolo() {
         playSound(R.raw.deepwatersolo);
+        textViewMessage.setText("Who was the slowest one?");
         dialogBoxType = "DWSY";
         newDialog();
     }
 
     @Override
     public void onDeepWaterSoloYolo() {
+        textViewMessage.setText("Who was the slowest one?");
+        dialogBoxType = "SlowestDWSY";
+        imageViewPos1.setVisibility(View.VISIBLE);
+        imageViewDie1.setVisibility(View.INVISIBLE);
+        imageViewDie2.setVisibility(View.INVISIBLE);
+        rollButton.setEnabled(false);
+        imageViewLuckyDie1.setEnabled(false);
+        imageViewPos1.setEnabled(true);
+        imageViewPos2.setEnabled(true);
+        imageViewPos3.setEnabled(true);
+        imageViewPos4.setEnabled(true);
+
+    }
+
+    @Override
+    public void onSlowestDWSY() {
+        defendingPlayer.addSips(8);
+        rotatePlayers();
+    }
+
+    @Override
+    public void onYouHaveBeenAttacked66() {
+        defendingPlayer.addSips(14);
         rotatePlayers();
     }
 
@@ -291,7 +333,6 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         playerToKillHisBeer.addSips(14);
         rotatePlayers();
     }
-
 
 
     private void pair(int i) {
@@ -332,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
             dialogBoxType = "SuccesfulDefence";
             newDialog();
         } else {
-            if(rng.nextInt(2)==1) {
+            if (rng.nextInt(2) == 1) {
                 playSound(R.raw.fail);
             } else {
                 playSound(R.raw.fail2);
@@ -362,9 +403,7 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
     }
 
 
-    private int attackValue() {
-        return (attackDie1.getNumber() + attackDie2.getNumber()) / 2;
-    }
+
 
     private void updateSips() {
         textViewPos1Sips.setText("" + attackingPlayer.getSips());

@@ -66,6 +66,7 @@ public class Die {
         MainActivity.mediaPlayerRoll.start();
         int randomNumber = rng.nextInt(6) + 1;
         number = randomNumber;
+        // number = 6;
 
         switch (randomNumber) {
             case 1:
