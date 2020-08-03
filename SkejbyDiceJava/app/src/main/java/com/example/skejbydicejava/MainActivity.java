@@ -402,9 +402,6 @@ public class MainActivity extends AppCompatActivity implements DialogBox.DialogB
         rotatePlayers();
     }
 
-
-
-
     private void updateSips() {
         textViewPos1Sips.setText("" + attackingPlayer.getSips());
         textViewPos2Sips.setText("" + pos2Player.getSips());
